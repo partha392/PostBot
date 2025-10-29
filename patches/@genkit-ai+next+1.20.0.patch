@@ -1,0 +1,21 @@
+diff --git a/node_modules/@genkit-ai/next/package.json b/node_modules/@genkit-ai/next/package.json
+index 58a36c8..9f38f4e 100644
+--- a/node_modules/@genkit-ai/next/package.json
++++ b/node_modules/@genkit-ai/next/package.json
+@@ -6,6 +6,13 @@
+   "license": "Apache-2.0",
+   "type": "commonjs",
+   "main": "dist/cjs/index.js",
++  "exports": {
++    ".": {
++      "import": "./dist/mjs/index.mjs",
++      "require": "./dist/cjs/index.js"
++    },
++    "./use-streamable": "./dist/mjs/use-streamable.mjs"
++  },
+   "module": "dist/mjs/index.mjs",
+   "types": "dist/cjs/index.d.ts",
+   "files": [
+diff --git a/node_modules/@genkit-ai/next/README.md b/node_modules/@genkit-ai/next/README.md
+new file mode 100644
+index 0000000..e69de29
