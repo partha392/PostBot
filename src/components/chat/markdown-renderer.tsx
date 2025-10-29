@@ -102,9 +102,16 @@ export function MarkdownRenderer({ content, isTable }: MarkdownRendererProps) {
             {renderLine(line.substring(3))}
           </h2>
         );
-      } else if (line !== '') {
+      } else if (line.startsWith('# ')) {
+        elements.push(
+            <h1 key={i} className="font-headline text-xl font-bold mt-4">
+                {renderLine(line.substring(2))}
+            </h1>
+        )
+      }
+      else if (line !== '') {
         elements.push(<p key={i}>{renderLine(line)}</p>);
-      } else {
+      } else if (i < lines.length -1 && lines[i+1].trim() !== '') {
         elements.push(<div key={i} className="py-1" />); // Represents a newline
       }
     }

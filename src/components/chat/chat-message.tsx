@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils';
 import { ChatAvatar } from './chat-avatar';
 import { MarkdownRenderer } from './markdown-renderer';
 import { Card, CardContent } from '@/components/ui/card';
+import React from 'react';
 
 const renderUserMessage = (text: string) => {
   const parts = text.split(/(\*\*.*?\*\*)/g);
@@ -49,7 +50,7 @@ export function ChatMessage({ role, content, isTable }: Message) {
           </Card>
         ) : (
           <div className="inline-block rounded-lg bg-primary text-primary-foreground px-4 py-2">
-            <p className="text-base whitespace-pre-wrap">{renderUserMessage(content)}</p>
+            <div className="text-base whitespace-pre-wrap">{renderUserMessage(content)}</div>
           </div>
         )}
       </div>
