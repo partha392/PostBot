@@ -14,16 +14,13 @@ const knowledgeBase: Knowledge[] = [
     keywords: ['scss', 'senior', 'citizen', 'savings', 'scheme'],
     title: 'Senior Citizen Savings Scheme (SCSS)',
     information: `
-      The Senior Citizen Savings Scheme (SCSS) is a government-backed savings instrument designed for Indian residents above the age of 60. It offers financial security through regular interest payments.
+      The interest rate for the Senior Citizens' Savings Scheme (SCSS) is currently 8.2% per annum, which is paid quarterly. This is a government-backed scheme with a 5-year maturity period, although it can be extended.
 
-      - **Eligibility**:
-        - Individuals aged 60 years or above.
-        - Retirees on superannuation or VRS aged 55-60 can also invest, provided the investment is made within one month of receiving retirement benefits.
-        - Retired defence personnel can invest irrespective of age limits, subject to certain conditions.
-      - **Interest Rate**: The interest rate is currently **8.2% per annum**, paid quarterly. The rate is subject to periodic government review.
-      - **Investment Limit**: You can start with a minimum investment of **INR 1,000**. The maximum amount you can invest is **INR 30 lakh**.
-      - **Tenure**: The scheme has a maturity period of **5 years**. After maturity, it can be extended for another **3 years**.
-      - **Tax Benefits**: Investments made in SCSS are eligible for tax deductions under **Section 80C** of the Income Tax Act, 1961.
+      - **Current Rate**: 8.2% per annum for the 2025-26 period.
+      - **Payment Frequency**: Interest is paid quarterly on April 1, July 1, October 1, and January 1.
+      - **Maturity**: The standard tenure is 5 years, but it can be extended for another 3 years.
+      - **Taxation**: Interest earned is subject to income tax, but a deduction of up to Rs. 50,000 can be claimed under [Section 80TTB](https://incometaxindia.gov.in/t/_layouts/15/dit/mobile/viewer.aspx?path=https://incometaxindia.gov.in/rules/income-tax%20rules/103120000000007360.htm&k=).
+      - **TDS**: If interest income exceeds Rs. 50,000 in a year, Tax Deducted at Source (TDS) applies. You can submit [Form 15H](https://www.incometaxindia.gov.in/forms/income-tax%20rules/103120000000007843.pdf) to seek an exemption.
     `,
     sourceUrl: 'https://www.indiapost.gov.in/Financial/Pages/Content/Post-Office-Saving-Schemes.aspx',
   },

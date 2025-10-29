@@ -15,6 +15,7 @@ interface MarkdownRendererProps {
 
 const renderLine = (line: string) => {
   line = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  line = line.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">$1</a>');
   return <span dangerouslySetInnerHTML={{ __html: line }} />;
 }
 
