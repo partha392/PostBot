@@ -93,12 +93,6 @@ export default function ChatLayout({
                 Settings
               </SidebarMenuButton>
             </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton>
-                <CircleUser />
-                Profile
-              </SidebarMenuButton>
-            </SidebarMenuItem>
           </SidebarMenu>
         </SidebarFooter>
       </Sidebar>
