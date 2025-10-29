@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { PostBotLogo } from '@/components/icons';
 import { Mail, TrendingUp, Shield, MessageCircle, Clock, Bot } from 'lucide-react';
-import { HeroPattern } from '@/components/hero-pattern';
+import { ChatBackgroundPattern } from '@/components/chat/chat-background-pattern';
 import { AnimatedElement } from '@/components/animated-element';
 
 export function LandingPage() {
@@ -11,7 +11,7 @@ export function LandingPage() {
     <div className="flex flex-col min-h-screen bg-white">
       <main className="flex-1">
         <section className="relative w-full py-20 md:py-32 lg:py-40 bg-gradient-to-r from-red-500 to-orange-500 text-white overflow-hidden">
-          <HeroPattern className="absolute inset-0 w-full h-full text-white/10" />
+          <ChatBackgroundPattern className="absolute inset-0 w-full h-full text-white/10" />
           <div className="container mx-auto px-4 md:px-6 text-center relative">
             <AnimatedElement>
               <div className="flex flex-col items-center space-y-4">
