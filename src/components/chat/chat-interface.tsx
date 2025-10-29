@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, useActionState } from 'react';
+import { useEffect, useRef, useState, useActionState, useTransition } from 'react';
 import { handleQuery } from '@/app/actions';
 import type { FormState, Message } from '@/lib/types';
 import { ChatInput } from './chat-input';
@@ -22,33 +22,58 @@ const suggestedQueries = [
 ]
 
 function SuggestedQueryForm({
-  query,
-  handleUserMessage,
-  formAction,
-  setInput,
-}: {
-  query: string;
-  handleUserMessage: (query: string) => void;
-  formAction: (formData: FormData) => void;
-  setInput: (input: string) => void;
-}) {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    handleUserMessage(query);
-    const formData = new FormData(e.currentTarget);
-    formAction(formData);
-    setInput('');
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <input type="hidden" name="query" value={query} />
-      <Button variant="outline" size="sm" type="submit">
-        {query}
-      </Button>
-    </form>
-  );
-}
+    query,
+    setMessages,
+  }: {
+    query: string;
+    setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+  }) {
+    const [formState, formAction] = useActionState<FormState, FormData>(handleQuery, null);
+    const [isPending, startTransition] = useTransition();
+  
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: nanoid(),
+          role: 'user',
+          content: query,
+        },
+      ]);
+      const formData = new FormData(e.currentTarget);
+      startTransition(() => {
+        formAction(formData);
+      });
+    };
+  
+    useEffect(() => {
+        if (formState) {
+          if (formState.error) {
+            // Error is handled in the main component
+          } else if (formState.message) {
+            setMessages((prev) => [
+              ...prev,
+              {
+                id: nanoid(),
+                role: 'assistant',
+                content: formState.message,
+                isTable: formState.isTable,
+              },
+            ]);
+          }
+        }
+      }, [formState]);
+  
+    return (
+      <form onSubmit={handleSubmit}>
+        <input type="hidden" name="query" value={query} />
+        <Button variant="outline" size="sm" type="submit" disabled={isPending}>
+          {query}
+        </Button>
+      </form>
+    );
+  }
 
 export function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
@@ -67,15 +92,21 @@ export function ChatInterface() {
           variant: 'destructive',
         });
       } else if (formState.message) {
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: nanoid(),
-            role: 'assistant',
-            content: formState.message,
-            isTable: formState.isTable,
-          },
-        ]);
+        setMessages((prev) => {
+            // Avoid adding duplicate assistant messages if already handled by suggested query form
+            if (prev[prev.length -1]?.role === 'assistant' && prev[prev.length - 1]?.content === formState.message) {
+                return prev;
+            }
+            return [
+                ...prev,
+                {
+                    id: nanoid(),
+                    role: 'assistant',
+                    content: formState.message,
+                    isTable: formState.isTable,
+                },
+            ]
+        });
       }
     }
   }, [formState, toast]);
@@ -131,9 +162,7 @@ export function ChatInterface() {
                         <AnimatedElement key={q} delay={300 + i * 100}>
                             <SuggestedQueryForm 
                                 query={q}
-                                handleUserMessage={handleUserMessage}
-                                formAction={formAction}
-                                setInput={setInput}
+                                setMessages={setMessages}
                             />
                         </AnimatedElement>
                     ))}
