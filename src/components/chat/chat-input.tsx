@@ -26,6 +26,7 @@ export function ChatInput({
   setFile,
 }: ChatInputProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -43,9 +44,7 @@ export function ChatInput({
     }
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+  const handleFormAction = (formData: FormData) => {
     const query = formData.get('query') as string;
 
     if (!query.trim() && !file) return;
@@ -53,31 +52,27 @@ export function ChatInput({
     onMessageSubmit(query, file ?? undefined);
 
     if (file) {
+      const reader = new FileReader();
+      reader.onload = (loadEvent) => {
+        formData.append('docContent', loadEvent.target?.result as string);
+        formAction(formData);
+      };
       if (file.type.startsWith('image/')) {
-        const reader = new FileReader();
-        reader.onload = (loadEvent) => {
-          formData.append('docContent', loadEvent.target?.result as string);
-          formAction(formData);
-        };
         reader.readAsDataURL(file);
       } else {
-        const reader = new FileReader();
-        reader.onload = (loadEvent) => {
-          formData.append('docContent', loadEvent.target?.result as string);
-          formAction(formData);
-        };
         reader.readAsText(file);
       }
     } else {
       formAction(formData);
     }
-
+    
     setInput('');
     setFile(null);
     if(fileInputRef.current) {
       fileInputRef.current.value = '';
     }
-  };
+    formRef.current?.reset();
+  }
 
   return (
     <div className="flex flex-col gap-2">
@@ -93,7 +88,8 @@ export function ChatInput({
         </div>
       )}
       <form
-        onSubmit={handleSubmit}
+        ref={formRef}
+        action={handleFormAction}
         className="flex items-center gap-2 rounded-lg border p-2 bg-card"
       >
         <input
