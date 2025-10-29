@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { useFormState } from 'react-dom';
+import { useEffect, useRef, useState, useActionState } from 'react';
 import { handleQuery } from '@/app/actions';
 import type { FormState, Message } from '@/lib/types';
 import { ChatInput } from './chat-input';
@@ -29,7 +28,7 @@ const suggestedQueries = [
 
 export function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
-  const [formState, formAction] = useFormState<FormState, FormData>(handleQuery, null);
+  const [formState, formAction] = useActionState<FormState, FormData>(handleQuery, null);
   const { toast } = useToast();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const [input, setInput] = useState('');
