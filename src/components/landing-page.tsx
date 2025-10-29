@@ -25,7 +25,7 @@ export function LandingPage() {
               <p className="max-w-[600px] text-gray-300 md:text-lg">
                 Get instant, accurate answers about Speed Post, PPF, NSC, Insurance, and all India Post services — anytime, anywhere.
               </p>
-              <Link href="/chat" legacyBehavior passHref>
+              <Link href="/chat">
                 <Button
                   variant="default"
                   size="lg"
@@ -127,7 +127,7 @@ export function LandingPage() {
             <p className="max-w-[600px] mx-auto mt-4 text-muted-foreground md:text-xl/relaxed">
               Experience the future of India Post customer service. Fast, accurate, and always available.
             </p>
-            <Link href="/chat" legacyBehavior passHref>
+            <Link href="/chat">
               <Button
                 size="lg"
                 className="mt-6 transition-transform duration-200 hover:scale-105 active:scale-95"
