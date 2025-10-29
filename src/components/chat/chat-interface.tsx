@@ -4,11 +4,10 @@ import { handleQuery } from '@/app/actions';
 import type { Message } from '@/lib/types';
 import { Bot } from 'lucide-react';
 import { nanoid } from 'nanoid';
-import { useEffect, useOptimistic, useRef, useState, useTransition } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { AnimatedElement } from '@/components/animated-element';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useToast } from '@/hooks/use-toast';
-import { Button } from '../ui/button';
 import { ChatInput } from './chat-input';
 import { ChatMessage } from './chat-message';
 import { SuggestedQueryForm } from './suggested-query-form';
@@ -24,15 +23,20 @@ const suggestedQueries = [
 
 export function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
-  const [optimisticMessages, setOptimisticMessages] = useOptimistic(
-    messages,
-    (state, newMessage: Message) => [
-        ...state,
-        newMessage
-    ]
-  );
   const { toast } = useToast();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+  const addMessage = (message: Message) => {
+    setMessages((prev) => [...prev, message]);
+  };
+
+  const updateMessage = (id: string, newContent: string) => {
+    setMessages((prev) =>
+      prev.map((msg) =>
+        msg.id === id ? { ...msg, content: newContent } : msg
+      )
+    );
+  };
 
   useEffect(() => {
     if (scrollAreaRef.current) {
@@ -53,39 +57,56 @@ export function ChatInterface() {
         reader.readAsDataURL(file);
       });
     }
-    
+
     const userMessage: Message = {
-        id: nanoid(),
-        role: 'user',
-        content: file ? `File: ${file.name}\n\n${query}` : query,
+      id: nanoid(),
+      role: 'user',
+      content: file ? `File: ${file.name}\n\n${query}` : query,
     };
-    
-    setOptimisticMessages(userMessage);
+    addMessage(userMessage);
+
+    const assistantMessage: Message = {
+      id: nanoid(),
+      role: 'assistant',
+      content: '',
+    };
+    addMessage(assistantMessage);
 
     try {
-      const assistantMessage = await handleQuery(messages, query, docContent);
-      setMessages(prev => [...prev, userMessage, assistantMessage]);
+      const stream = await handleQuery(messages, query, docContent);
+
+      if (stream instanceof ReadableStream) {
+        const reader = stream.getReader();
+        const decoder = new TextDecoder();
+        let streamedContent = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          streamedContent += decoder.decode(value, { stream: true });
+          updateMessage(assistantMessage.id, streamedContent);
+        }
+      } else {
+         updateMessage(assistantMessage.id, stream.content as string);
+      }
     } catch (error) {
       console.error(error);
+      const errorMessage = 'An error occurred while processing your request.';
+      updateMessage(assistantMessage.id, errorMessage);
       toast({
         title: 'Error',
-        description: 'An error occurred while processing your request.',
+        description: errorMessage,
         variant: 'destructive',
       });
-      // Revert optimistic update on error
-      setMessages(messages);
     }
   };
 
-  const addMessage = (message: Message) => {
-    setMessages(prev => [...prev, message]);
-  }
 
   return (
     <div className="h-full flex flex-col">
       <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
         <div className="container mx-auto max-w-4xl space-y-6 h-full">
-          {optimisticMessages.length === 0 ? (
+          {messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center">
               <Bot className="w-16 h-16 text-primary mb-4" />
               <h2 className="text-2xl font-semibold">
@@ -96,7 +117,7 @@ export function ChatInterface() {
               </p>
             </div>
           ) : (
-            optimisticMessages.map((message) => (
+            messages.map((message) => (
               <AnimatedElement key={message.id}>
                 <ChatMessage {...message} />
               </AnimatedElement>
@@ -110,7 +131,7 @@ export function ChatInterface() {
             <div className="mb-4 flex flex-wrap gap-2 justify-center md:justify-start">
               {suggestedQueries.map((q, i) => (
                 <AnimatedElement key={q} delay={300 + i * 100}>
-                  <SuggestedQueryForm query={q} setOptimisticMessages={setOptimisticMessages} addMessage={addMessage} />
+                  <SuggestedQueryForm query={q} handleUserMessage={handleUserMessage} />
                 </AnimatedElement>
               ))}
             </div>
