@@ -55,7 +55,7 @@ export function LandingPage() {
             </AnimatedElement>
             <div className="mx-auto grid max-w-5xl items-start gap-8 sm:grid-cols-2 md:grid-cols-3 lg:gap-12 mt-12">
               <AnimatedElement delay={100}>
-                <Card className="text-center h-full">
+                <Card className="text-center h-full transition-transform duration-200 hover:scale-105">
                   <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
                       <div className="bg-primary/10 p-3 rounded-full">
                           <Mail className="w-8 h-8 text-primary" />
@@ -68,7 +68,7 @@ export function LandingPage() {
                 </Card>
               </AnimatedElement>
               <AnimatedElement delay={200}>
-                <Card className="text-center h-full">
+                <Card className="text-center h-full transition-transform duration-200 hover:scale-105">
                   <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
                       <div className="bg-primary/10 p-3 rounded-full">
                           <TrendingUp className="w-8 h-8 text-primary" />
@@ -81,7 +81,7 @@ export function LandingPage() {
                 </Card>
               </AnimatedElement>
               <AnimatedElement delay={300}>
-                <Card className="text-center h-full">
+                <Card className="text-center h-full transition-transform duration-200 hover:scale-105">
                   <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
                       <div className="bg-primary/10 p-3 rounded-full">
                           <Shield className="w-8 h-8 text-primary" />
@@ -94,7 +94,7 @@ export function LandingPage() {
                 </Card>
               </AnimatedElement>
               <AnimatedElement delay={400}>
-                <Card className="text-center h-full">
+                <Card className="text-center h-full transition-transform duration-200 hover:scale-105">
                   <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
                       <div className="bg-primary/10 p-3 rounded-full">
                           <Clock className="w-8 h-8 text-primary" />
@@ -107,7 +107,7 @@ export function LandingPage() {
                 </Card>
               </AnimatedElement>
               <AnimatedElement delay={500}>
-                <Card className="text-center h-full">
+                <Card className="text-center h-full transition-transform duration-200 hover:scale-105">
                   <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
                       <div className="bg-primary/10 p-3 rounded-full">
                           <Bot className="w-8 h-8 text-primary" />
@@ -120,7 +120,7 @@ export function LandingPage() {
                 </Card>
               </AnimatedElement>
               <AnimatedElement delay={600}>
-                <Card className="text-center h-full">
+                <Card className="text-center h-full transition-transform duration-200 hover:scale-105">
                   <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
                       <div className="bg-primary/10 p-3 rounded-full">
                           <MessageCircle className="w-8 h-8 text-primary" />
