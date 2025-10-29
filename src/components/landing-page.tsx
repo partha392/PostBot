@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { PostBotLogo } from '@/components/icons';
-import { Mail, TrendingUp, Shield, MessageCircle } from 'lucide-react';
+import { Mail, TrendingUp, Shield, MessageCircle, Clock, Bot } from 'lucide-react';
 
 export function LandingPage() {
   return (
@@ -52,9 +52,9 @@ export function LandingPage() {
                     <div className="bg-red-100 p-3 rounded-full">
                         <Mail className="w-8 h-8 text-red-600" />
                     </div>
-                  <h3 className="text-xl font-bold">Scheme Information</h3>
+                  <h3 className="text-xl font-bold">Speed Post Info</h3>
                   <p className="text-muted-foreground">
-                    Get detailed information about all postal savings and insurance schemes.
+                    Track shipments, delivery times, charges, and express services
                   </p>
                 </CardContent>
               </Card>
@@ -63,9 +63,9 @@ export function LandingPage() {
                     <div className="bg-red-100 p-3 rounded-full">
                         <TrendingUp className="w-8 h-8 text-red-600" />
                     </div>
-                  <h3 className="text-xl font-bold">Interest Rates</h3>
+                  <h3 className="text-xl font-bold">Savings & Investments</h3>
                   <p className="text-muted-foreground">
-                    Ask for the latest interest rates for SCSS, MIS, NSC, and more.
+                    PPF, NSC, savings accounts, interest rates, and tax benefits
                   </p>
                 </CardContent>
               </Card>
@@ -74,13 +74,65 @@ export function LandingPage() {
                     <div className="bg-red-100 p-3 rounded-full">
                         <Shield className="w-8 h-8 text-red-600" />
                     </div>
-                  <h3 className="text-xl font-bold">Service Details</h3>
+                  <h3 className="text-xl font-bold">Insurance Services</h3>
                   <p className="text-muted-foreground">
-                    Find out about Speed Post, parcel services, and other postal facilities.
+                    PLI, RPLI plans, premiums, benefits, and coverage details
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="text-center">
+                <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
+                    <div className="bg-red-100 p-3 rounded-full">
+                        <Clock className="w-8 h-8 text-red-600" />
+                    </div>
+                  <h3 className="text-xl font-bold">24/7 Availability</h3>
+                  <p className="text-muted-foreground">
+                    Get answers instantly, day or night, without waiting
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="text-center">
+                <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
+                    <div className="bg-red-100 p-3 rounded-full">
+                        <Bot className="w-8 h-8 text-red-600" />
+                    </div>
+                  <h3 className="text-xl font-bold">AI-Powered</h3>
+                  <p className="text-muted-foreground">
+                    Smart semantic search finds the most relevant answers
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="text-center">
+                <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
+                    <div className="bg-red-100 p-3 rounded-full">
+                        <MessageCircle className="w-8 h-8 text-red-600" />
+                    </div>
+                  <h3 className="text-xl font-bold">Easy to Use</h3>
+                  <p className="text-muted-foreground">
+                    Simple chat interface, just ask your question naturally
                   </p>
                 </CardContent>
               </Card>
             </div>
+          </div>
+        </section>
+
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50">
+          <div className="container mx-auto px-4 md:px-6 text-center">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
+              Ready to Get Started?
+            </h2>
+            <p className="max-w-[600px] mx-auto mt-4 text-muted-foreground md:text-xl/relaxed">
+              Experience the future of India Post customer service. Fast, accurate, and always available.
+            </p>
+            <Link href="/chat" legacyBehavior passHref>
+              <Button
+                size="lg"
+                className="mt-6"
+              >
+                Try PostBot Now
+              </Button>
+            </Link>
           </div>
         </section>
       </main>
