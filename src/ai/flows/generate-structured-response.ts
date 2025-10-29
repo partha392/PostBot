@@ -44,9 +44,10 @@ const prompt = ai.definePrompt({
   Instructions:
   1.  Use clear headings and subheadings to organize the information.
   2.  Use bullet points to present key information in a concise manner.
-  3.  Include the source URLs at the end of the response to allow users to verify the information.
-  4.  Avoid unnecessary details and focus on providing the most relevant information to answer the query.
-  5.  Be as concise as possible.
+  3.  When you mention a key term (like a financial instrument, government scheme, or technical term), embed a hyperlink to the relevant Wikipedia page. Use markdown format for links, like [Term](https://en.wikipedia.org/wiki/Term).
+  4.  Include the source URLs at the end of the response to allow users to verify the information.
+  5.  Avoid unnecessary details and focus on providing the most relevant information to answer the query.
+  6.  Be as concise as possible.
 
   Query: {{{query}}}
   Information: {{{information}}}
