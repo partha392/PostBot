@@ -14,11 +14,16 @@ const knowledgeBase: Knowledge[] = [
     keywords: ['scss', 'senior', 'citizen', 'savings', 'scheme'],
     title: 'Senior Citizen Savings Scheme (SCSS)',
     information: `
-      - Eligibility: Individuals aged 60 years or above.
-      - Interest Rate: 8.2% per annum, paid quarterly.
-      - Investment Limit: Minimum INR 1,000, Maximum INR 30 lakh.
-      - Tenure: 5 years, can be extended for another 3 years.
-      - Tax Benefits: Investment qualifies for deduction under Section 80C of the Income Tax Act.
+      The Senior Citizen Savings Scheme (SCSS) is a government-backed savings instrument designed for Indian residents above the age of 60. It offers financial security through regular interest payments.
+
+      - **Eligibility**:
+        - Individuals aged 60 years or above.
+        - Retirees on superannuation or VRS aged 55-60 can also invest, provided the investment is made within one month of receiving retirement benefits.
+        - Retired defence personnel can invest irrespective of age limits, subject to certain conditions.
+      - **Interest Rate**: The interest rate is currently **8.2% per annum**, paid quarterly. The rate is subject to periodic government review.
+      - **Investment Limit**: You can start with a minimum investment of **INR 1,000**. The maximum amount you can invest is **INR 30 lakh**.
+      - **Tenure**: The scheme has a maturity period of **5 years**. After maturity, it can be extended for another **3 years**.
+      - **Tax Benefits**: Investments made in SCSS are eligible for tax deductions under **Section 80C** of the Income Tax Act, 1961.
     `,
     sourceUrl: 'https://www.indiapost.gov.in/Financial/Pages/Content/Post-Office-Saving-Schemes.aspx',
   },
