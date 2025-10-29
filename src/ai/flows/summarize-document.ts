@@ -16,7 +16,11 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const SummarizeDocumentInputSchema = z.object({
-  docContent: z.string().describe('The content of the document to summarize.'),
+  docContent: z
+    .string()
+    .describe(
+      'The content of the document to summarize. This can be text or a data URI for an image.'
+    ),
   query: z.string().describe('The user query related to the document.'),
 });
 
@@ -38,14 +42,14 @@ const prompt = ai.definePrompt({
   name: 'summarizeDocumentPrompt',
   input: {schema: SummarizeDocumentInputSchema},
   output: {schema: SummarizeDocumentOutputSchema},
-  prompt: `You are an AI assistant specialized in summarizing documents.
+  prompt: `You are an AI assistant specialized in analyzing documents and images.
   
-  Based on the provided document content and the user's query, generate a concise summary or answer.
+  Based on the provided document content and the user's query, generate a concise summary or answer. If the content is an image, describe the image and answer the user's query based on its contents.
   
   User Query: {{{query}}}
   
   Document Content:
-  {{{docContent}}}
+  {{media url=docContent}}
   
   Summary:`,
 });

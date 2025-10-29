@@ -18,7 +18,7 @@ export async function handleQuery(prevState: FormState, formData: FormData): Pro
   try {
     if (docContent) {
       const result = await summarizeDocument({ docContent, query });
-      return { message: result.summary };
+      return { message: result.summary, isTable: false };
     }
     
     if (!query) {
