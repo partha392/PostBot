@@ -14,9 +14,20 @@ interface MarkdownRendererProps {
 }
 
 const renderLine = (line: string) => {
-  line = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-  line = line.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">$1</a>');
-  return <span dangerouslySetInnerHTML={{ __html: line }} />;
+  // Use a more robust regex to handle multiple bold sections and links in a single line
+  const parts = line.split(/(\*\*.*?\*\*|\[.*?\]\(.*?\))/g);
+  return parts.map((part, index) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={index}>{part.slice(2, -2)}</strong>;
+    }
+    if (part.startsWith('[') && part.includes('](')) {
+      const match = /\[(.*?)\]\((.*?)\)/.exec(part);
+      if (match) {
+        return <a key={index} href={match[2]} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{match[1]}</a>;
+      }
+    }
+    return part;
+  });
 }
 
 export function MarkdownRenderer({ content, isTable }: MarkdownRendererProps) {

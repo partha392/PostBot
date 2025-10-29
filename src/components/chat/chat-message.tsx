@@ -4,6 +4,26 @@ import { ChatAvatar } from './chat-avatar';
 import { MarkdownRenderer } from './markdown-renderer';
 import { Card, CardContent } from '@/components/ui/card';
 
+const renderUserMessage = (text: string) => {
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, index) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={index}>{part.slice(2, -2)}</strong>;
+    }
+    // Handle newlines
+    if (part.includes('\n')) {
+      return part.split('\n').map((line, lineIndex) => (
+        <React.Fragment key={`${index}-${lineIndex}`}>
+          {line}
+          {lineIndex < part.split('\n').length - 1 && <br />}
+        </React.Fragment>
+      ));
+    }
+    return part;
+  });
+};
+
+
 export function ChatMessage({ role, content, isTable }: Message) {
   const isAssistant = role === 'assistant';
 
@@ -29,7 +49,7 @@ export function ChatMessage({ role, content, isTable }: Message) {
           </Card>
         ) : (
           <div className="inline-block rounded-lg bg-primary text-primary-foreground px-4 py-2">
-            <p className="text-base">{content}</p>
+            <p className="text-base whitespace-pre-wrap">{renderUserMessage(content)}</p>
           </div>
         )}
       </div>
