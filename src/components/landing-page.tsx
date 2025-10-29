@@ -137,20 +137,21 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section className="relative w-full py-12 md:py-24 lg:py-32 bg-gray-50 overflow-hidden">
-          <ChatBackgroundPattern className="absolute inset-0 w-full h-full text-gray-200/50" />
+        <section className="relative w-full py-12 md:py-24 lg:py-32 bg-green-600 text-white overflow-hidden">
+          <ChatBackgroundPattern className="absolute inset-0 w-full h-full text-white/10" />
           <div className="container mx-auto px-4 md:px-6 text-center relative">
             <AnimatedElement>
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
                 Ready to Get Started?
               </h2>
-              <p className="max-w-[600px] mx-auto mt-4 text-muted-foreground md:text-xl/relaxed">
+              <p className="max-w-[600px] mx-auto mt-4 text-green-100 md:text-xl/relaxed">
                 Experience the future of India Post customer service. Fast, accurate, and always available.
               </p>
               <Link href="/chat">
                 <Button
                   size="lg"
-                  className="mt-6 transition-transform duration-200 hover:scale-105 active:scale-95"
+                  variant="outline"
+                  className="mt-6 transition-transform duration-200 hover:scale-105 active:scale-95 bg-transparent border-white text-white hover:bg-white hover:text-green-600"
                 >
                   Try PostBot Now
                 </Button>
