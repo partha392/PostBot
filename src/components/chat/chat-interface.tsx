@@ -27,6 +27,7 @@ export function ChatInterface() {
   const { toast } = useToast();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const [input, setInput] = useState('');
+  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (formState) {
@@ -59,13 +60,17 @@ export function ChatInterface() {
     }
   }, [messages])
 
-  const handleUserMessage = (query: string) => {
+  const handleUserMessage = (query: string, uploadedFile?: File) => {
+    let content = query;
+    if (uploadedFile) {
+        content = `**File:** ${uploadedFile.name}\n\n${query}`;
+    }
     setMessages((prev) => [
       ...prev,
       {
         id: nanoid(),
         role: 'user',
-        content: query,
+        content: content,
       },
     ]);
   };
@@ -86,7 +91,7 @@ export function ChatInterface() {
             <div className="flex flex-col items-center justify-center h-full text-center">
               <Bot className="w-16 h-16 text-primary mb-4" />
               <h2 className="text-2xl font-semibold">What's on the agenda today?</h2>
-              <p className="text-muted-foreground">Ask me anything about India Post.</p>
+              <p className="text-muted-foreground">Ask me anything about India Post, or upload a document to discuss.</p>
             </div>
           ) : (
             messages.map((message, index) => (
@@ -117,6 +122,8 @@ export function ChatInterface() {
                 formAction={formAction}
                 input={input}
                 setInput={setInput}
+                file={file}
+                setFile={setFile}
             />
         </AnimatedElement>
       </div>

@@ -3,17 +3,28 @@
 import { classifyUserQuery } from '@/ai/flows/classify-user-query';
 import { generateComparisonTable } from '@/ai/flows/generate-comparison-table';
 import { generateStructuredResponse } from '@/ai/flows/generate-structured-response';
+import { summarizeDocument } from '@/ai/flows/summarize-document';
 import { getKnowledgeForQuery, SCHEME_ACRONYMS } from '@/lib/knowledge-base';
 import type { FormState } from '@/lib/types';
 
 export async function handleQuery(prevState: FormState, formData: FormData): Promise<FormState> {
   const query = formData.get('query') as string;
+  const docContent = formData.get('docContent') as string | null;
 
-  if (!query) {
-    return { error: 'Query is required.', message: '' };
+  if (!query && !docContent) {
+    return { error: 'Query or document is required.', message: '' };
   }
 
   try {
+    if (docContent) {
+      const result = await summarizeDocument({ docContent, query });
+      return { message: result.summary };
+    }
+    
+    if (!query) {
+      return { error: 'Query is required.', message: '' };
+    }
+
     const queryUpper = query.toUpperCase();
     const mentionedSchemes = SCHEME_ACRONYMS.filter((s) => queryUpper.includes(s.toUpperCase()));
     
