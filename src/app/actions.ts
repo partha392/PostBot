@@ -1,6 +1,5 @@
 'use server';
 
-import { classifyUserQuery } from '@/ai/flows/classify-user-query';
 import { generateComparisonTable } from '@/ai/flows/generate-comparison-table';
 import { generateStructuredResponse } from '@/ai/flows/generate-structured-response';
 import { summarizeDocument } from '@/ai/flows/summarize-document';
@@ -44,12 +43,7 @@ export async function handleQuery(prevState: FormState, formData: FormData): Pro
       }
     }
 
-    const classification = await classifyUserQuery({ query });
-
-    const { information, sourceUrls } = getKnowledgeForQuery(
-      query,
-      classification.category
-    );
+    const { information, sourceUrls } = getKnowledgeForQuery(query);
 
     if (!information) {
       // Fallback for general queries

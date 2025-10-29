@@ -15,14 +15,17 @@ const knowledgeBase: Knowledge[] = [
     title: 'Senior Citizen Savings Scheme (SCSS)',
     information: `
       ### Overview
-      The Senior Citizen Savings Scheme (SCSS) is a government-backed scheme with a 5-year maturity period, although it can be extended. Interest is paid quarterly.
+      The Senior Citizen Savings Scheme (SCSS) is a government-backed scheme with a 5-year maturity period, extendable by 3 years. Interest is paid quarterly.
 
       ### Key Features
-      - **Current Rate**: 8.2% per annum.
-      - **Payment Frequency**: Interest is paid quarterly on April 1, July 1, October 1, and January 1.
-      - **Maturity**: The standard tenure is 5 years, but it can be extended for another 3 years.
-      - **Taxation**: Interest earned is subject to income tax, but a deduction of up to Rs. 50,000 can be claimed under [Section 80TTB](https://incometaxindia.gov.in/t/_layouts/15/dit/mobile/viewer.aspx?path=https://incometaxindia.gov.in/rules/income-tax%20rules/103120000000007360.htm&k=).
-      - **TDS**: If interest income exceeds Rs. 50,000 in a year, Tax Deducted at Source (TDS) applies. You can submit [Form 15H](https://www.incometaxindia.gov.in/forms/income-tax%20rules/103120000000007843.pdf) to seek an exemption.
+      - **Current Interest Rate**: 8.2% per annum (for 2025-26 period).
+      - **Interest Payment Frequency**: Quarterly, on April 1, July 1, October 1, and January 1.
+      - **Maturity Period**: 5 years, extendable for an additional 3 years.
+      - **Taxation**: 
+        - Interest earned is subject to income tax.
+        - A deduction of up to Rs. 50,000 can be claimed under Section 80TTB.
+        - Tax Deducted at Source (TDS) applies if interest income exceeds Rs. 50,000 in a year.
+        - Form 15H can be submitted to seek a TDS exemption.
     `,
     sourceUrl: 'https://www.indiapost.gov.in/Financial/Pages/Content/Post-Office-Saving-Schemes.aspx',
   },
@@ -84,15 +87,32 @@ const knowledgeBase: Knowledge[] = [
   },
 ];
 
-export const getKnowledgeForQuery = (query: string, category: string): { information: string; sourceUrls: string[] } => {
+export const getKnowledgeForQuery = (query: string): { information: string; sourceUrls: string[] } => {
   const queryLower = query.toLowerCase();
-  const matchedEntries = knowledgeBase.filter(
-    (entry) =>
-      entry.category === category &&
-      entry.keywords.some((keyword) => queryLower.includes(keyword))
+  
+  const matchedEntries = knowledgeBase.filter(entry => 
+    entry.keywords.some(keyword => queryLower.includes(keyword))
   );
 
   if (matchedEntries.length === 0) {
+    // Check for general keywords
+    const isSavingsQuery = ['savings', 'investment', 'account'].some(k => queryLower.includes(k));
+    const isPostalQuery = ['postal', 'facility', 'post office'].some(k => queryLower.includes(k));
+
+    if (isSavingsQuery) {
+      const savingsEntries = knowledgeBase.filter(e => e.category === 'Savings & Investment Accounts');
+      const information = savingsEntries.map(entry => `## ${entry.title}\n${entry.information}`).join('\n\n');
+      const sourceUrls = [...new Set(savingsEntries.map(entry => entry.sourceUrl))];
+      return { information, sourceUrls };
+    }
+    
+    if (isPostalQuery) {
+        const postalEntries = knowledgeBase.filter(e => e.category === 'Postal Facilities');
+        const information = postalEntries.map(entry => `## ${entry.title}\n${entry.information}`).join('\n\n');
+        const sourceUrls = [...new Set(postalEntries.map(entry => entry.sourceUrl))];
+        return { information, sourceUrls };
+    }
+
     return { information: '', sourceUrls: [] };
   }
 
