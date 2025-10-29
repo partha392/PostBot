@@ -4,30 +4,23 @@ import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { SendHorizonal, LoaderCircle, Plus, Paperclip, X } from 'lucide-react';
-import { FormEvent, useRef, useState, ChangeEvent } from 'react';
+import { FormEvent, useRef, useState, ChangeEvent, useTransition } from 'react';
 import { Badge } from '../ui/badge';
 import { useToast } from '@/hooks/use-toast';
 
 interface ChatInputProps {
   onMessageSubmit: (message: string, file?: File) => void;
-  formAction: (formData: FormData) => void;
-  input: string;
-  setInput: (value: string) => void;
-  file: File | null;
-  setFile: (file: File | null) => void;
 }
 
 export function ChatInput({
   onMessageSubmit,
-  formAction,
-  input,
-  setInput,
-  file,
-  setFile,
 }: ChatInputProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
+  const [input, setInput] = useState('');
+  const [file, setFile] = useState<File | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
@@ -44,28 +37,15 @@ export function ChatInput({
     }
   };
 
-  const handleFormAction = (formData: FormData) => {
-    const query = formData.get('query') as string;
-
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const query = input;
     if (!query.trim() && !file) return;
 
-    onMessageSubmit(query, file ?? undefined);
+    startTransition(() => {
+        onMessageSubmit(query, file ?? undefined);
+    });
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (loadEvent) => {
-        formData.append('docContent', loadEvent.target?.result as string);
-        formAction(formData);
-      };
-      if (file.type.startsWith('image/')) {
-        reader.readAsDataURL(file);
-      } else {
-        reader.readAsText(file);
-      }
-    } else {
-      formAction(formData);
-    }
-    
     setInput('');
     setFile(null);
     if(fileInputRef.current) {
@@ -89,7 +69,7 @@ export function ChatInput({
       )}
       <form
         ref={formRef}
-        action={handleFormAction}
+        onSubmit={handleSubmit}
         className="flex items-center gap-2 rounded-lg border p-2 bg-card"
       >
         <input
@@ -116,23 +96,15 @@ export function ChatInput({
           onChange={(e) => setInput(e.target.value)}
           autoComplete="off"
         />
-        <SubmitButton />
+        <Button type="submit" size="icon" disabled={isPending}>
+            {isPending ? (
+                <LoaderCircle className="h-5 w-5 animate-spin" />
+            ) : (
+                <SendHorizonal className="h-5 w-5" />
+            )}
+            <span className="sr-only">Send message</span>
+        </Button>
       </form>
     </div>
-  );
-}
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <Button type="submit" size="icon" disabled={pending}>
-      {pending ? (
-        <LoaderCircle className="h-5 w-5 animate-spin" />
-      ) : (
-        <SendHorizonal className="h-5 w-5" />
-      )}
-      <span className="sr-only">Send message</span>
-    </Button>
   );
 }

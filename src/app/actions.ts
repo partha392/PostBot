@@ -1,66 +1,44 @@
 'use server';
 
-import { generateComparisonTable } from '@/ai/flows/generate-comparison-table';
-import { generateStructuredResponse } from '@/ai/flows/generate-structured-response';
-import { summarizeDocument } from '@/ai/flows/summarize-document';
-import { webSearch } from '@/ai/flows/web-search';
-import { getKnowledgeForQuery, SCHEME_ACRONYMS } from '@/lib/knowledge-base';
-import type { FormState } from '@/lib/types';
+import { streamedQuery } from '@/ai/flows/streamed-query';
+import type { Message } from '@/lib/types';
+import { nanoid } from 'nanoid';
+import { createStreamableUI } from '@genkit-ai/next/use-streamable';
 
-export async function handleQuery(prevState: FormState, formData: FormData): Promise<FormState> {
-  const query = formData.get('query') as string;
-  const docContent = formData.get('docContent') as string | null;
+export async function handleQuery(
+  history: Message[],
+  query: string,
+  docContent?: string
+) {
+  const stream = createStreamableUI();
 
-  if (!query && !docContent) {
-    return { error: 'Query or document is required.', message: '' };
-  }
-
-  try {
-    if (docContent) {
-      const result = await summarizeDocument({ docContent, query });
-      return { message: result.summary, isTable: false };
-    }
-    
-    if (!query) {
-      return { error: 'Query is required.', message: '' };
-    }
-
-    const queryUpper = query.toUpperCase();
-    const mentionedSchemes = SCHEME_ACRONYMS.filter((s) => queryUpper.includes(s.toUpperCase()));
-    
-    const isComparison =
-      queryUpper.includes('COMPARE') ||
-      queryUpper.includes(' VS ') ||
-      mentionedSchemes.length > 1;
-
-    if (isComparison) {
-      const schemesToCompare = mentionedSchemes.join(', ');
-      if (schemesToCompare) {
-        const result = await generateComparisonTable({
-          schemes: schemesToCompare,
-          query,
-        });
-        return { message: result.comparisonTable, isTable: true };
-      }
-    }
-
-    const { information, sourceUrls } = getKnowledgeForQuery(query);
-
-    if (!information) {
-      // Fallback to web search for general queries
-      const webResult = await webSearch({ query });
-      return { message: webResult.response, isTable: false };
-    }
-
-    const structuredResponse = await generateStructuredResponse({
+  (async () => {
+    const { stream: output, error } = await streamedQuery({
       query,
-      information,
-      sourceUrls,
+      docContent,
+      history,
     });
 
-    return { message: structuredResponse.response, isTable: false };
-  } catch (error) {
-    console.error(error);
-    return { error: 'An error occurred while processing your request. Please try again.', message: '' };
-  }
+    if (error) {
+      stream.done();
+      return;
+    }
+
+    if (!output) {
+      stream.done();
+      return;
+    }
+
+    for await (const chunk of output) {
+      stream.update(chunk);
+    }
+
+    stream.done();
+  })();
+
+  return {
+    id: nanoid(),
+    role: 'assistant' as const,
+    content: stream.value,
+  };
 }

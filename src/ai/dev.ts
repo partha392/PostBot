@@ -1,7 +1,4 @@
 import { config } from 'dotenv';
 config();
 
-import '@/ai/flows/generate-comparison-table.ts';
-import '@/ai/flows/generate-structured-response.ts';
-import '@/ai/flows/summarize-document.ts';
-import '@/ai/flows/web-search.ts';
+import '@/ai/flows/streamed-query.ts';
