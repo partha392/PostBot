@@ -21,34 +21,33 @@ const suggestedQueries = [
     'Kisan Vikas Patra details',
 ]
 
-function SuggestedQueryForm({ 
-    query, 
-    handleUserMessage,
-    formAction,
-    setInput
-}: { 
-    query: string;
-    handleUserMessage: (query: string) => void;
-    formAction: (formData: FormData) => void;
-    setInput: (input: string) => void;
+function SuggestedQueryForm({
+  query,
+  handleUserMessage,
+  formAction,
+  setInput,
+}: {
+  query: string;
+  handleUserMessage: (query: string) => void;
+  formAction: (formData: FormData) => void;
+  setInput: (input: string) => void;
 }) {
-    const formRef = useRef<HTMLFormElement>(null);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleUserMessage(query);
+    const formData = new FormData(e.currentTarget);
+    formAction(formData);
+    setInput('');
+  };
 
-    const handleClick = () => {
-        handleUserMessage(query);
-        const formData = new FormData(formRef.current!);
-        formAction(formData);
-        setInput('');
-    };
-
-    return (
-        <form ref={formRef} action={formAction}>
-            <input type="hidden" name="query" value={query} />
-            <Button variant="outline" size="sm" type="button" onClick={handleClick}>
-                {query}
-            </Button>
-        </form>
-    );
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="hidden" name="query" value={query} />
+      <Button variant="outline" size="sm" type="submit">
+        {query}
+      </Button>
+    </form>
+  );
 }
 
 export function ChatInterface() {
