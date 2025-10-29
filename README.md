@@ -4,7 +4,8 @@ PostBot is an AI-powered chat assistant that provides instant, accurate answers 
 
 This project is built with Next.js, Genkit (for AI), and Tailwind CSS.
 
-![Landing Page](/.github/screenshot.png)
+![Landing Page](https://github.com/partha392/PostBot/blob/main/image_1.png?raw=true)
+![Landing Page](https://github.com/partha392/PostBot/blob/main/image_2.png?raw=true)
 
 ## Features
 
