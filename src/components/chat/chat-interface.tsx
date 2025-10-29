@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { nanoid } from 'nanoid';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { AnimatedElement } from '@/components/animated-element';
 
 const initialMessages: Message[] = [
   {
@@ -87,27 +88,35 @@ export function ChatInterface() {
     <div className="h-full flex flex-col">
       <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
         <div className="container mx-auto max-w-4xl space-y-6">
-          {messages.map((message) => (
-            <ChatMessage key={message.id} {...message} />
+          {messages.map((message, index) => (
+            <AnimatedElement key={message.id} delay={index === 0 ? 0 : 100}>
+                <ChatMessage {...message} />
+            </AnimatedElement>
           ))}
         </div>
       </ScrollArea>
       <div className="container mx-auto max-w-4xl p-4 pt-0">
         {messages.length <= 1 && (
-            <div className="mb-4 flex flex-wrap gap-2">
-                {suggestedQueries.map(q => (
-                    <Button key={q} variant="outline" size="sm" onClick={() => handleSuggestedQuery(q)}>
-                        {q}
-                    </Button>
-                ))}
-            </div>
+            <AnimatedElement delay={200}>
+                <div className="mb-4 flex flex-wrap gap-2">
+                    {suggestedQueries.map((q, i) => (
+                        <AnimatedElement key={q} delay={300 + i * 100}>
+                            <Button variant="outline" size="sm" onClick={() => handleSuggestedQuery(q)}>
+                                {q}
+                            </Button>
+                        </AnimatedElement>
+                    ))}
+                </div>
+            </AnimatedElement>
         )}
-        <ChatInput
-            onMessageSubmit={handleUserMessage}
-            formAction={formAction}
-            input={input}
-            setInput={setInput}
-        />
+        <AnimatedElement delay={messages.length <= 1 ? 500 : 0}>
+            <ChatInput
+                onMessageSubmit={handleUserMessage}
+                formAction={formAction}
+                input={input}
+                setInput={setInput}
+            />
+        </AnimatedElement>
       </div>
     </div>
   );
