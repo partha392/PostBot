@@ -1,0 +1,64 @@
+diff --git a/node_modules/@genkit-ai/next/package.json b/node_modules/@genkit-ai/next/package.json
+index 35a9756..5881c96 100644
+--- a/node_modules/@genkit-ai/next/package.json
++++ b/node_modules/@genkit-ai/next/package.json
+@@ -23,12 +23,17 @@
+   "exports": {
+     ".": {
+       "types": "./lib/index.d.ts",
+-      "default": "./lib/index.js"
++      "default": "./lib/index.js",
++      "react-server": "./lib/index.js"
+     },
+     "./use-streamable": {
+       "types": "./lib/use-streamable.d.ts",
+-      "default": "./lib/use-streamable.js"
++      "default": "./lib/use-streamable.js",
++      "react-server": "./lib/use-streamable.js"
+     },
+-    "./package.json": "./package.json"
++    "./package.json": "./package.json",
++    "./server": {
++      "default": "./lib/index.js"
++    }
+   },
+   "files": [
+     "lib/",
+diff --git a/node_modules/@genkit-ai/next/lib/index.js b/node_modules/@genkit-ai/next/lib/index.js
+index c6b92f7..6a6d36e 100644
+--- a/node_modules/@genkit-ai/next/lib/index.js
++++ b/node_modules/@genkit-ai/next/lib/index.js
+@@ -16,11 +16,15 @@
+  */
+ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.getFlow = exports.genkit = void 0;
++const client_1 = require("./use-streamable");
+ const genkit_1 = require("genkit");
+ Object.defineProperty(exports, "genkit", { enumerable: true, get: function () { return genkit_1.genkit; } });
+ const genkit_2 = require("genkit");
+-function getFlow(name) {
+-    const flow = (0, genkit_2.lookupFlow)(name);
+-    return flow.fn;
+-}
+-exports.getFlow = getFlow;
+\ No newline at end of file
++/**
++ * Looks up a flow function by name.
++ * @param name The name of the flow to look up.
++ * @returns The flow function.
++ */
++function getFlow(name) { return (0, genkit_2.lookupFlow)(name).fn; }
++exports.getFlow = getFlow;
++Object.assign(module.exports, client_1);
+diff --git a/node_modules/@genkit-ai/next/lib/use-streamable.js b/node_modules/@genkit-ai/next/lib/use-streamable.js
+index 725cc91..c6c4062 100644
+--- a/node_modules/@genkit-ai/next/lib/use-streamable.js
++++ b/node_modules/@genkit-ai/next/lib/use-streamable.js
+@@ -14,6 +14,7 @@
+  * limitations under the License.
+  */
+ 'use client';
++"use strict";
+ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.createStreamableUI = exports.useStreamable = void 0;
+ const react_1 = require("react");
