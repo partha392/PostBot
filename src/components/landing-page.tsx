@@ -8,7 +8,7 @@ import { AnimatedElement } from '@/components/animated-element';
 
 export function LandingPage() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-white">
       <main className="flex-1">
         <section className="relative w-full py-20 md:py-32 lg:py-40 bg-gradient-to-r from-red-500 to-orange-500 text-white overflow-hidden">
           <HeroPattern className="absolute inset-0 w-full h-full text-white/10" />
