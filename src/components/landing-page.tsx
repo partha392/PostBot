@@ -3,13 +3,15 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { PostBotLogo } from '@/components/icons';
 import { Mail, TrendingUp, Shield, MessageCircle, Clock, Bot } from 'lucide-react';
+import { HeroPattern } from '@/components/hero-pattern';
 
 export function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-1">
-        <section className="w-full py-20 md:py-32 lg:py-40 bg-gradient-to-r from-red-500 to-orange-500 text-white">
-          <div className="container mx-auto px-4 md:px-6 text-center">
+        <section className="relative w-full py-20 md:py-32 lg:py-40 bg-gradient-to-r from-red-500 to-orange-500 text-white overflow-hidden">
+          <HeroPattern className="absolute inset-0 w-full h-full text-white/10" />
+          <div className="container mx-auto px-4 md:px-6 text-center relative">
             <div className="flex flex-col items-center space-y-4">
               <div className="bg-white/20 rounded-full p-3">
                 <PostBotLogo className="h-12 w-12 text-white" />
@@ -49,8 +51,8 @@ export function LandingPage() {
             <div className="mx-auto grid max-w-5xl items-start gap-8 sm:grid-cols-2 md:grid-cols-3 lg:gap-12 mt-12">
               <Card className="text-center">
                 <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
-                    <div className="bg-red-100 p-3 rounded-full">
-                        <Mail className="w-8 h-8 text-red-600" />
+                    <div className="bg-primary/10 p-3 rounded-full">
+                        <Mail className="w-8 h-8 text-primary" />
                     </div>
                   <h3 className="text-xl font-bold">Speed Post Info</h3>
                   <p className="text-muted-foreground">
@@ -60,8 +62,8 @@ export function LandingPage() {
               </Card>
               <Card className="text-center">
                 <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
-                    <div className="bg-red-100 p-3 rounded-full">
-                        <TrendingUp className="w-8 h-8 text-red-600" />
+                    <div className="bg-primary/10 p-3 rounded-full">
+                        <TrendingUp className="w-8 h-8 text-primary" />
                     </div>
                   <h3 className="text-xl font-bold">Savings & Investments</h3>
                   <p className="text-muted-foreground">
@@ -71,8 +73,8 @@ export function LandingPage() {
               </Card>
               <Card className="text-center">
                 <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
-                    <div className="bg-red-100 p-3 rounded-full">
-                        <Shield className="w-8 h-8 text-red-600" />
+                    <div className="bg-primary/10 p-3 rounded-full">
+                        <Shield className="w-8 h-8 text-primary" />
                     </div>
                   <h3 className="text-xl font-bold">Insurance Services</h3>
                   <p className="text-muted-foreground">
@@ -82,8 +84,8 @@ export function LandingPage() {
               </Card>
               <Card className="text-center">
                 <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
-                    <div className="bg-red-100 p-3 rounded-full">
-                        <Clock className="w-8 h-8 text-red-600" />
+                    <div className="bg-primary/10 p-3 rounded-full">
+                        <Clock className="w-8 h-8 text-primary" />
                     </div>
                   <h3 className="text-xl font-bold">24/7 Availability</h3>
                   <p className="text-muted-foreground">
@@ -93,8 +95,8 @@ export function LandingPage() {
               </Card>
               <Card className="text-center">
                 <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
-                    <div className="bg-red-100 p-3 rounded-full">
-                        <Bot className="w-8 h-8 text-red-600" />
+                    <div className="bg-primary/10 p-3 rounded-full">
+                        <Bot className="w-8 h-8 text-primary" />
                     </div>
                   <h3 className="text-xl font-bold">AI-Powered</h3>
                   <p className="text-muted-foreground">
@@ -104,8 +106,8 @@ export function LandingPage() {
               </Card>
               <Card className="text-center">
                 <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
-                    <div className="bg-red-100 p-3 rounded-full">
-                        <MessageCircle className="w-8 h-8 text-red-600" />
+                    <div className="bg-primary/10 p-3 rounded-full">
+                        <MessageCircle className="w-8 h-8 text-primary" />
                     </div>
                   <h3 className="text-xl font-bold">Easy to Use</h3>
                   <p className="text-muted-foreground">
