@@ -4,7 +4,7 @@ import { ChatAvatar } from './chat-avatar';
 import { MarkdownRenderer } from './markdown-renderer';
 import { Card, CardContent } from '@/components/ui/card';
 import React from 'react';
-import { useStreamable } from '@genkit-ai/next/use-streamable';
+import { useStreamable } from '@genkit-ai/next';
 
 const renderUserMessage = (text: string) => {
   const parts = text.split(/(\*\*.*?\*\*)/g);

@@ -3,7 +3,7 @@
 import { streamedQuery } from '@/ai/flows/streamed-query';
 import type { Message } from '@/lib/types';
 import { nanoid } from 'nanoid';
-import { createStreamableUI } from '@genkit-ai/next/use-streamable';
+import { createStreamableUI } from '@genkit-ai/next';
 
 export async function handleQuery(
   history: Message[],
