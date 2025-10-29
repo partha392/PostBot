@@ -72,6 +72,41 @@ const knowledgeBase: Knowledge[] = [
     sourceUrl: 'https://www.indiapost.gov.in/Financial/Pages/Content/Post-Office-Saving-Schemes.aspx',
   },
   {
+    id: 'ppf',
+    category: 'Savings & Investment Accounts',
+    keywords: ['ppf', 'public', 'provident', 'fund'],
+    title: 'Public Provident Fund (PPF)',
+    information: `
+      ### Overview
+      The Public Provident Fund (PPF) is a long-term savings scheme with a 15-year maturity period, offering attractive tax benefits under the Exempt-Exempt-Exempt (EEE) status.
+
+      ### Key Features
+      - **Interest Rate**: 7.1% per annum, compounded annually.
+      - **Tenure**: 15 years, can be extended in blocks of 5 years.
+      - **Investment Limit**: Minimum INR 500 and Maximum INR 1.5 lakh per financial year.
+      - **Tax Benefits**: Contributions are eligible for deduction under Section 80C. The interest earned and maturity amount are both tax-free.
+    `,
+    sourceUrl: 'https://www.indiapost.gov.in/Financial/Pages/Content/Post-Office-Saving-Schemes.aspx',
+  },
+  {
+    id: 'ssy',
+    category: 'Savings & Investment Accounts',
+    keywords: ['ssy', 'sukanya', 'samriddhi', 'yojana', 'girl', 'child'],
+    title: 'Sukanya Samriddhi Yojana (SSY)',
+    information: `
+      ### Overview
+      A small savings scheme for the girl child, offering a high interest rate and tax benefits. It is part of the "Beti Bachao, Beti Padhao" campaign.
+
+      ### Key Features
+      - **Interest Rate**: 8.2% per annum, compounded annually.
+      - **Eligibility**: For a girl child below the age of 10.
+      - **Tenure**: Matures when the girl turns 21. Deposits can be made for 15 years.
+      - **Investment Limit**: Minimum INR 250 and Maximum INR 1.5 lakh per financial year.
+      - **Tax Benefits**: Qualifies for tax benefits under Section 80C. Interest and maturity amounts are tax-free.
+    `,
+    sourceUrl: 'https://www.indiapost.gov.in/Financial/Pages/Content/Post-Office-Saving-Schemes.aspx',
+  },
+  {
     id: 'speedpost',
     category: 'Postal Facilities',
     keywords: ['speed', 'post', 'parcel', 'delivery', 'courier'],
