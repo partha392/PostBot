@@ -21,6 +21,36 @@ const suggestedQueries = [
     'Kisan Vikas Patra details',
 ]
 
+function SuggestedQueryForm({ 
+    query, 
+    handleUserMessage,
+    formAction,
+    setInput
+}: { 
+    query: string;
+    handleUserMessage: (query: string) => void;
+    formAction: (formData: FormData) => void;
+    setInput: (input: string) => void;
+}) {
+    const formRef = useRef<HTMLFormElement>(null);
+
+    const handleClick = () => {
+        handleUserMessage(query);
+        const formData = new FormData(formRef.current!);
+        formAction(formData);
+        setInput('');
+    };
+
+    return (
+        <form ref={formRef} action={formAction}>
+            <input type="hidden" name="query" value={query} />
+            <Button variant="outline" size="sm" type="button" onClick={handleClick}>
+                {query}
+            </Button>
+        </form>
+    );
+}
+
 export function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [formState, formAction] = useActionState<FormState, FormData>(handleQuery, null);
@@ -74,14 +104,6 @@ export function ChatInterface() {
       },
     ]);
   };
-  
-  const handleSuggestedQuery = (query: string) => {
-    handleUserMessage(query);
-    const formData = new FormData();
-    formData.append('query', query);
-    formAction(formData);
-    setInput('');
-  }
 
   return (
     <div className="h-full flex flex-col">
@@ -108,9 +130,12 @@ export function ChatInterface() {
                 <div className="mb-4 flex flex-wrap gap-2 justify-center md:justify-start">
                     {suggestedQueries.map((q, i) => (
                         <AnimatedElement key={q} delay={300 + i * 100}>
-                            <Button variant="outline" size="sm" onClick={() => handleSuggestedQuery(q)}>
-                                {q}
-                            </Button>
+                            <SuggestedQueryForm 
+                                query={q}
+                                handleUserMessage={handleUserMessage}
+                                formAction={formAction}
+                                setInput={setInput}
+                            />
                         </AnimatedElement>
                     ))}
                 </div>
