@@ -10,15 +10,9 @@ import { useToast } from '@/hooks/use-toast';
 import { nanoid } from 'nanoid';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { AnimatedElement } from '@/components/animated-element';
+import { Bot } from 'lucide-react';
 
-const initialMessages: Message[] = [
-  {
-    id: nanoid(),
-    role: 'assistant',
-    content:
-      "Hello! I'm PostBot, your AI assistant for India Post services. How can I help you today? You can ask me about interest rates, compare schemes, or find information on postal facilities.",
-  },
-];
+const initialMessages: Message[] = [];
 
 const suggestedQueries = [
     'What is the interest rate for SCSS?',
@@ -87,18 +81,26 @@ export function ChatInterface() {
   return (
     <div className="h-full flex flex-col">
       <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
-        <div className="container mx-auto max-w-4xl space-y-6">
-          {messages.map((message, index) => (
-            <AnimatedElement key={message.id} delay={index === 0 ? 0 : 100}>
-                <ChatMessage {...message} />
-            </AnimatedElement>
-          ))}
+        <div className="container mx-auto max-w-4xl space-y-6 h-full">
+          {messages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-full text-center">
+              <Bot className="w-16 h-16 text-primary mb-4" />
+              <h2 className="text-2xl font-semibold">What's on the agenda today?</h2>
+              <p className="text-muted-foreground">Ask me anything about India Post.</p>
+            </div>
+          ) : (
+            messages.map((message, index) => (
+              <AnimatedElement key={message.id} delay={index === 0 ? 0 : 100}>
+                  <ChatMessage {...message} />
+              </AnimatedElement>
+            ))
+          )}
         </div>
       </ScrollArea>
       <div className="container mx-auto max-w-4xl p-4 pt-0">
-        {messages.length <= 1 && (
+        {messages.length === 0 && (
             <AnimatedElement delay={200}>
-                <div className="mb-4 flex flex-wrap gap-2">
+                <div className="mb-4 flex flex-wrap gap-2 justify-center md:justify-start">
                     {suggestedQueries.map((q, i) => (
                         <AnimatedElement key={q} delay={300 + i * 100}>
                             <Button variant="outline" size="sm" onClick={() => handleSuggestedQuery(q)}>
@@ -109,7 +111,7 @@ export function ChatInterface() {
                 </div>
             </AnimatedElement>
         )}
-        <AnimatedElement delay={messages.length <= 1 ? 500 : 0}>
+        <AnimatedElement delay={messages.length === 0 ? 500 : 0}>
             <ChatInput
                 onMessageSubmit={handleUserMessage}
                 formAction={formAction}

@@ -3,7 +3,7 @@
 import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { SendHorizonal, LoaderCircle } from 'lucide-react';
+import { SendHorizonal, LoaderCircle, Plus } from 'lucide-react';
 import { FormEvent } from 'react';
 
 interface ChatInputProps {
@@ -28,11 +28,15 @@ export function ChatInput({ onMessageSubmit, formAction, input, setInput }: Chat
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center gap-2">
+    <form onSubmit={handleSubmit} className="flex items-center gap-2 rounded-lg border p-2 bg-card">
+        <Button variant="ghost" size="icon" type="button">
+            <Plus className="h-5 w-5"/>
+            <span className="sr-only">Add file</span>
+        </Button>
       <Input
         name="query"
-        placeholder="Ask about India Post services..."
-        className="flex-1"
+        placeholder="Ask anything..."
+        className="flex-1 border-0 shadow-none focus-visible:ring-0"
         value={input}
         onChange={(e) => setInput(e.target.value)}
         autoComplete="off"
