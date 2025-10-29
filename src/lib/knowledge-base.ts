@@ -14,9 +14,9 @@ const knowledgeBase: Knowledge[] = [
     keywords: ['scss', 'senior', 'citizen', 'savings', 'scheme'],
     title: 'Senior Citizen Savings Scheme (SCSS)',
     information: `
-      The interest rate for the Senior Citizens' Savings Scheme (SCSS) is currently 8.2% per annum, which is paid quarterly. This is a government-backed scheme with a 5-year maturity period, although it can be extended.
+      The interest rate for the Senior Citizens' Savings Scheme (SCSS) is currently 8.2% per annum for the 2025-26 period. This is a government-backed scheme with a 5-year maturity period, although it can be extended. Interest is paid quarterly.
 
-      - **Current Rate**: 8.2% per annum for the 2025-26 period.
+      - **Current Rate**: 8.2% per annum.
       - **Payment Frequency**: Interest is paid quarterly on April 1, July 1, October 1, and January 1.
       - **Maturity**: The standard tenure is 5 years, but it can be extended for another 3 years.
       - **Taxation**: Interest earned is subject to income tax, but a deduction of up to Rs. 50,000 can be claimed under [Section 80TTB](https://incometaxindia.gov.in/t/_layouts/15/dit/mobile/viewer.aspx?path=https://incometaxindia.gov.in/rules/income-tax%20rules/103120000000007360.htm&k=).
