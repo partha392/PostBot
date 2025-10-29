@@ -90,7 +90,13 @@ export function MarkdownRenderer({ content, isTable }: MarkdownRendererProps) {
         listItems = [];
       }
 
-      if (line.startsWith('## ')) {
+      if (line.startsWith('### ')) {
+        elements.push(
+          <h3 key={i} className="font-headline text-md font-semibold mt-3">
+            {renderLine(line.substring(4))}
+          </h3>
+        );
+      } else if (line.startsWith('## ')) {
         elements.push(
           <h2 key={i} className="font-headline text-lg font-semibold mt-4">
             {renderLine(line.substring(3))}
