@@ -103,7 +103,7 @@ export function ChatInterface() {
 
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col bg-transparent">
       <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
         <div className="container mx-auto max-w-4xl space-y-6 h-full">
           {messages.length === 0 ? (
