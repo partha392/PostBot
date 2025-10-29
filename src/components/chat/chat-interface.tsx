@@ -63,7 +63,7 @@ function SuggestedQueryForm({
             ]);
           }
         }
-      }, [formState]);
+      }, [formState, setMessages]);
   
     return (
       <form onSubmit={handleSubmit}>
