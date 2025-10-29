@@ -14,8 +14,8 @@ interface MarkdownRendererProps {
 }
 
 const renderLine = (line: string) => {
-  // Use a more robust regex to handle multiple bold sections and links in a single line
-  const parts = line.split(/(\*\*.*?\*\*|\[.*?\]\(.*?\))/g);
+  // Regex to find URLs, markdown links, and bold text
+  const parts = line.split(/(\*\*.*?\*\*|\[.*?\]\(.*?\)|https?:\/\/\S+)/g);
   return parts.map((part, index) => {
     if (part.startsWith('**') && part.endsWith('**')) {
       return <strong key={index}>{part.slice(2, -2)}</strong>;
@@ -25,6 +25,9 @@ const renderLine = (line: string) => {
       if (match) {
         return <a key={index} href={match[2]} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{match[1]}</a>;
       }
+    }
+    if (part.startsWith('http')) {
+        return <a key={index} href={part} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{part}</a>;
     }
     return part;
   });
